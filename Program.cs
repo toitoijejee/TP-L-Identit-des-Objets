@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ExerciceProduit
 {
@@ -40,22 +41,43 @@ namespace ExerciceProduit
         }
     }
 
+    class ProduitPerissable : Produit
+    {
+        private int joursAvantPeremption;
+
+        public ProduitPerissable(string c, string n, double p, int j) : base(c, n, p)
+        {
+            this.joursAvantPeremption = j;
+        }
+
+        public int GetJoursAvantPeremption()
+        {
+            return joursAvantPeremption;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
-        {
-
+        {            
+            List<object> inventaire = new List<object>();
             Produit p1 = new Produit("A01", "Souris", 15.0);
-            Produit p2 = new Produit("A01", "Souris", 15.0);
+            inventaire.Add(12);               
+            inventaire.Add("Dépôt Central");    
+            inventaire.Add(p1);               
 
-      
-            HashSet<Produit> panier = new HashSet<Produit>();
-            panier.Add(p1);
-            panier.Add(p2);
+            foreach (object item in inventaire)
+            {
+                Console.WriteLine($"Type réel : {item.GetType()}");
+                
+                Console.WriteLine($"Description : {item.ToString()}");
 
-            // 2. Le constat
-            Console.WriteLine("Nombre de produits dans le panier (HashSet) :");
-            Console.WriteLine(panier.Count);
+                if (item is Produit p)
+                {
+                    Console.WriteLine($"Code Article détecté : {p.GetCodeArticle()}");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
